@@ -1,0 +1,36 @@
+[
+    {
+        "id": "connective-it",
+        "title": "Connective IT - Landing Page",
+        "description": "Landing Page informativa sobre los servicios de una empresa de tecnología, realizada con Astro y Tailwind.",
+        "link": "https://demo-connective.netlify.app/",
+        "github": "https://github.com/rovert-rh/ConnecT",
+        "image": "/projects/portweb-08.webp",
+        "tags": [
+            "ASTRO",
+            "TAILWIND"
+        ]
+    },
+    {
+        "id": "dvux",
+        "title": "DVUX - Agencia Creativa",
+        "description": "Landing Page informativa sobre los servicios de una agencia creativa, realizada con Astro y Tailwind.",
+        "link": "https://dvux.lat/",
+        "github": "https://github.com/rovert-rh/dvux-v2.git",
+        "image": "/projects/portweb-04.webp",
+        "tags": [
+            "ASTRO",
+            "TAILWIND"
+        ]
+    },
+    {
+        "id": "okei-amigo",
+        "title": "OKEI AMIGO",
+        "description": "Ecommerce de productos artesanales, implementando diseño personalizado en Shopify.",
+        "link": "https://okeiamigo.com/",
+        "image": "/projects/portweb-07.webp",
+        "tags": [
+            "SHOPIFY"
+        ]
+    }
+]

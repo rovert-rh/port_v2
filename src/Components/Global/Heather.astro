@@ -1,0 +1,93 @@
+---
+import ThemeToggle from "./ThemeToggle.astro";
+
+const navItems = [
+    {
+        title: "Experiencia",
+        label: "experiencia",
+        url: "/#experiencia",
+    },
+    {
+        title: "Proyectos",
+        label: "proyectos",
+        url: "/#proyectos",
+    },
+    {
+        title: "Sobre mí",
+        label: "sobre-mi",
+        url: "/#sobre-mi",
+    },
+];
+---
+
+<header class="fixed top-0 z-50 w-full mt-2">
+    <nav
+        class="navbar mx-auto w-fit rounded-full shadow-xl transition-all duration-300 backdrop-blur-sm bg-base-100/70"
+        id="main-navbar"
+    >
+        <ul
+            class="menu menu-horizontal p-0 text-sm font-medium"
+            id="nav-menu-links"
+        >
+            {
+                navItems.map((link) => (
+                    <li>
+                        <a
+                            class="relative block px-3 py-2 transition-colors hover:text-primary active:text-primary"
+                            aria-label={link.label}
+                            href={link.url}
+                        >
+                            {link.title}
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
+        <div class="divider divider-horizontal mx-0"></div>
+        <div class="px-2">
+            <ThemeToggle />
+        </div>
+    </nav>
+</header>
+
+<script>
+    document.addEventListener("astro:load", () => {
+        const sections = document.querySelectorAll("section");
+        const navLinks = document.querySelectorAll("#nav-menu-links a");
+
+        const setActiveLink = (targetId: any) => {
+            navLinks.forEach((link) => {
+                const linkLabel = link.getAttribute("aria-label");
+                if (linkLabel === targetId) {
+                    // DaisyUI usa 'active' para el enlace seleccionado, 'primary' para el color
+                    link.classList.add("active");
+                    link.classList.add("text-primary"); // Añadimos color primario de DaisyUI
+                } else {
+                    link.classList.remove("active");
+                    link.classList.remove("text-primary");
+                }
+            });
+        };
+
+        const callback = (entries: any) => {
+            entries.forEach((entry: any) => {
+                if (entry.isIntersecting) {
+                    setActiveLink(entry.target.id);
+                }
+            });
+        };
+
+        const observer = new IntersectionObserver(callback, {
+            root: null,
+            rootMargin: "0px",
+            threshold: 0.3,
+        });
+
+        sections.forEach((section) => {
+            observer.observe(section);
+        });
+        document.addEventListener("astro:before-swap", () => {
+            observer.disconnect();
+        });
+    });
+</script>

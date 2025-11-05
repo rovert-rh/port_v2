@@ -1,0 +1,118 @@
+---
+import SunIcon from "../../SVG/Icons/Sun.astro";
+import MoonIcon from "../../SVG/Icons/Moon.astro";
+import SystemIcon from "../../SVG/Icons/System.astro";
+
+const THEMES = ["Light", "Dark", "System"];
+---
+
+<div class="dropdown dropdown-end relative" transition:persist>
+    <button
+        id="theme-toggle-btn"
+        tabindex="0"
+        role="button"
+        class="btn btn-ghost btn-sm rounded-full aspect-square"
+        aria-label="Elige el tema"
+    >
+        <span class="sr-only">Tema Actual</span>
+        <SunIcon
+            id="light"
+            class="theme-toggle-icon size-5 transition-transform duration-300 absolute"
+        />
+        <MoonIcon
+            id="dark"
+            class="theme-toggle-icon size-5 transition-transform duration-300 absolute"
+        />
+        <SystemIcon
+            id="system"
+            class="theme-toggle-icon size-5 transition-transform duration-300 absolute"
+        />
+    </button>
+
+    <ul
+        id="themes-menu"
+        tabindex="0"
+        class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-32 mt-2 border border-base-content/10"
+    >
+        {
+            THEMES.map((theme) => (
+                <li
+                    class="themes-menu-option"
+                    data-theme-name={theme.toLowerCase()}
+                >
+                    <a>{theme}</a>
+                </li>
+            ))
+        }
+    </ul>
+</div>
+
+<script is:inline>
+    let remove = null;
+    const matchMedia = window.matchMedia("(prefers-color-scheme: dark)");
+
+    const getThemePreference = () => {
+        if (typeof localStorage !== "undefined") {
+            return localStorage.getItem("theme") ?? "system";
+        }
+        return matchMedia.matches ? "dark" : "light";
+    };
+
+    const updateIcon = (themePreference) => {
+        document.querySelectorAll(".theme-toggle-icon").forEach((element) => {
+            const isCurrent = element.id === themePreference;
+            element.classList.toggle("scale-100", isCurrent);
+            element.classList.toggle("scale-0", !isCurrent);
+        });
+    };
+
+    const updateTheme = () => {
+        if (remove != null) {
+            remove();
+        }
+        matchMedia.addEventListener("change", updateTheme);
+        remove = () => {
+            matchMedia.removeEventListener("change", updateTheme);
+        };
+
+        const themePreference = getThemePreference();
+        const isDark =
+            themePreference === "dark" ||
+            (themePreference === "system" && matchMedia.matches);
+        updateIcon(themePreference);
+        document.documentElement.classList[isDark ? "add" : "remove"]("dark");
+        const html = document.documentElement;
+        if (
+            themePreference === "light" ||
+            (themePreference === "system" && !matchMedia.matches)
+        ) {
+            html.setAttribute("data-theme", "light");
+        } else if (
+            themePreference === "dark" ||
+            (themePreference === "system" && matchMedia.matches)
+        ) {
+            html.setAttribute("data-theme", "dark");
+        } else {
+            html.removeAttribute("data-theme");
+        }
+        document.querySelectorAll(".themes-menu-option").forEach((li) => {
+            const themeName = li.getAttribute("data-theme-name");
+            li.classList.toggle("bordered", themeName === themePreference);
+            li.classList.toggle("active", themeName === themePreference);
+        });
+    };
+
+    updateTheme();
+    document.querySelectorAll(".themes-menu-option").forEach((element) => {
+        element.addEventListener("click", (e) => {
+            // Usamos el atributo 'data-theme-name' para obtener el valor
+            const theme = element.getAttribute("data-theme-name");
+            localStorage.setItem("theme", theme);
+            updateTheme();
+            document.getElementById("theme-toggle-btn").focus();
+        });
+    });
+    document.addEventListener("astro:after-swap", () => {
+        updateTheme();
+    });
+</script>

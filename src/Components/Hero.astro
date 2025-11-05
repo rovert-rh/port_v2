@@ -1,0 +1,89 @@
+---
+const personalImageAlt = "Roberto Reyes";
+import Badge from "../Components/Global/Badge.astro";
+import LinkedInIcon from "../SVG/Icons/LinkedIn.astro";
+import MailIcon from "../SVG/Icons/Mail.astro";
+import SocialPill from "./SocialPill.astro";
+import CVIcon from "../SVG/Icons/CV.astro";
+import GitHubIcon from "../SVG/Icons/GitHub.astro";
+---
+
+<div class="max-w-xl">
+    <div
+        class="flex flex-col sm:flex-row sm:items-center gap-4 mb-6"
+        data-animation="fade-in-up"
+        style="animation-delay: 0.1s;"
+    >
+        <img
+            class="rounded-full w-auto shadow-xl size-32 object-cover transition-transform duration-500 hover:scale-[1.02]"
+            src="/RobertoR.webp"
+            alt={personalImageAlt}
+        />
+        <div class="flex items-center gap-2">
+            <span class="size-3 bg-success rounded-full animate-pulse"></span>
+            <Badge class="font-semibold text-base py-3">
+                Disponible para trabajar
+            </Badge>
+        </div>
+    </div>
+
+    <h1
+        class="text-4xl font-extrabold tracking-tight sm:text-5xl text-base-content"
+        data-animation="fade-in-up"
+        style="animation-delay: 0.25s;"
+    >
+        ¡Hola, Soy <span class="text-primary">Roberto Reyes</span>!
+    </h1>
+
+    <p
+        class="mt-6 text-lg md:text-xl text-base-content/90"
+        data-animation="fade-in-up"
+        style="animation-delay: 0.4s;"
+    >
+        +8 años de experiencia.
+        <strong class="font-semibold text-primary"
+            >Desarrollador Full-Stack || Especialista en Infraestructura Cloud</strong
+        > en Puebla, México. Especializado en el desarrollo de aplicaciones web y
+        implementaciones de Infraestructura Cloud.
+    </p>
+
+    <nav
+        class="flex flex-wrap gap-3 mt-8"
+        data-animation="fade-in-up"
+        style="animation-delay: 0.55s;"
+    >
+        <SocialPill href="mailto:robertoireyes.m@gmail.com">
+            <MailIcon class="size-4" />
+            Contáctame
+        </SocialPill>
+        <SocialPill href="https://www.linkedin.com/in/roberto-reyes-ib/">
+            <LinkedInIcon class="size-4" />
+            LinkedIn
+        </SocialPill>
+        <SocialPill
+            href="https://drive.google.com/file/d/1ZlJGDzWcktH9G1kDBItFGPpx_UsYltA8/view?usp=sharing"
+        >
+            <CVIcon class="size-4" />
+            CV
+        </SocialPill>
+        <SocialPill href="https://github.com/rovert-rh">
+            <GitHubIcon class="size-4" />
+            GitHub
+        </SocialPill>
+    </nav>
+</div>
+
+<style>
+    [data-animation="fade-in-up"] {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 0.7s forwards;
+    }
+
+    @keyframes fadeInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>

@@ -1,0 +1,8 @@
+---
+import ProjectCard from "./ProjectCard.astro";
+import projects from "../../data/projects.json";
+---
+
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    {projects.map((project) => <ProjectCard project={project} />)}
+</section>
