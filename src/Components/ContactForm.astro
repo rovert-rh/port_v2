@@ -8,100 +8,69 @@ const calendlyLink =
     "https://calendly.com/proyectoweb/30min?hide_event_type_details=1&hide_gdpr_banner=1";
 ---
 
-<section id="contacto" class="py-4">
-    <div class="max-w-6xl mx-auto px-4 md:px-0">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div
-                class="card bg-base-100 shadow-xl border border-base-content/10 p-6"
-            >
-                <h3
-                    class="text-2xl font-semibold mb-6 flex items-center gap-2 text-primary"
-                >
-                    <MailIcon class="size-6" />
-                    Enviar un mensaje
-                </h3>
+<section id="contacto" class="py-4"></section>
 
-                <form
-                    name={formName}
-                    data-netlify="true"
-                    method="POST"
-                    id="contact-form"
-                    class="space-y-6"
-                >
-                    <input type="hidden" name="form-name" value={formName} />
+<script>
+    document.addEventListener("astro:load", () => {
+        const form = document.getElementById(
+            "contact-form",
+        ) as HTMLFormElement | null;
 
-                    <div>
-                        <label
-                            for="name"
-                            class="label text-base-content/80 pt-0 pb-1"
-                            >Nombre</label
-                        >
-                        <input
-                            type="text"
-                            id="name"
-                            name="name"
-                            placeholder="Tu nombre completo"
-                            class="input input-bordered w-full"
-                            required
-                        />
-                    </div>
+        if (!form) return;
+        const encode = (data: Record<string, string>) => {
+            return Object.keys(data)
+                .map(
+                    (key) =>
+                        encodeURIComponent(key) +
+                        "=" +
+                        encodeURIComponent(data[key]),
+                )
+                .join("&");
+        };
 
-                    <div>
-                        <label
-                            for="email"
-                            class="label text-base-content/80 pt-0 pb-1"
-                            >Email</label
-                        >
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            placeholder="ejemplo@correo.com"
-                            class="input input-bordered w-full"
-                            required
-                        />
-                    </div>
+        form.addEventListener("submit", (event) => {
+            event.preventDefault();
 
-                    <div>
-                        <label
-                            for="message"
-                            class="label text-base-content/80 pt-0 pb-1"
-                            >Mensaje</label
-                        >
-                        <textarea
-                            id="message"
-                            name="message"
-                            placeholder="Cuéntame sobre tu proyecto o necesidad..."
-                            class="textarea textarea-bordered h-24 w-full"
-                            required></textarea>
-                    </div>
+            const formData = new FormData(form);
+            const data: Record<string, string> = {};
 
-                    <button type="submit" class="btn btn-primary w-full">
-                        Enviar Mensaje 🚀
-                    </button>
-                </form>
-            </div>
+            formData.forEach((value, key) => {
+                data[key] = value.toString();
+            });
 
-            <div
-                class="card bg-base-100 shadow-xl border border-base-content/10 overflow-hidden"
-            >
-                <h3
-                    class="md:hidden text-2xl font-semibold p-6 flex items-center gap-2 text-primary"
-                >
-                    <CalendarIcon class="size-6" />
-                    Agendar una reunión
-                </h3>
-
-                <div
-                    class="calendly-inline-widget"
-                    data-url={calendlyLink}
-                    style="width:100%; height:700px;"
-                >
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+            const submitButton = form.querySelector('button[type="submit"]');
+            if (submitButton) {
+                submitButton.textContent = "Enviando...";
+                submitButton.setAttribute("disabled", "true");
+            }
+            fetch("/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: encode(data),
+            })
+                .then(() => {
+                    alert(
+                        "✅ ¡Mensaje enviado con éxito! Gracias por contactarme.",
+                    );
+                    form.reset();
+                })
+                .catch((error) => {
+                    console.error("Error al enviar formulario:", error);
+                    alert(
+                        "❌ ¡Vaya! Algo salió mal. Por favor, inténtalo de nuevo.",
+                    );
+                })
+                .finally(() => {
+                    if (submitButton) {
+                        submitButton.textContent = "Enviar Mensaje 🚀";
+                        submitButton.removeAttribute("disabled");
+                    }
+                });
+        });
+    });
+</script>
 
 <script
     type="text/javascript"
