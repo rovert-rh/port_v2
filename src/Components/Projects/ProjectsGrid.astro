@@ -1,8 +1,39 @@
 ---
 import ProjectCard from "./ProjectCard.astro";
+import { type Project } from "../../data/types";
 import projects from "../../data/projects.json";
+
+const projectData: Project[] = projects as Project[];
 ---
 
-<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-    {projects.map((project) => <ProjectCard project={project} />)}
+<section
+    id="projects-grid"
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+>
+    {projectData.map((project) => <ProjectCard project={project} />)}
 </section>
+
+<script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const projectCards = document.querySelectorAll("[data-gsap-project]");
+
+        gsap.set(projectCards, { autoAlpha: 0, y: 50 });
+        gsap.to(projectCards, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.6,
+            ease: "power2.out",
+            stagger: 0.1,
+            scrollTrigger: {
+                trigger: "#projects-grid",
+                start: "top 85%",
+                toggleActions: "play none none none",
+            },
+        });
+    });
+</script>

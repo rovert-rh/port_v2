@@ -8,6 +8,7 @@ import React from "../Components/icons/React.astro";
 import Express from "../Components/icons/Express.astro";
 import MongoDB from "../Components/icons/MongoDB.astro";
 import AstroI from "../Components/icons/AstroIcon.astro";
+import DOTNET from "../Components/icons/NET.astro";
 
 export const TAGS = {
     NEXT: { name: "Next.js", class: "bg-black text-white", icon: NextJS },
@@ -19,5 +20,8 @@ export const TAGS = {
     REACT: { name: "React", class: "bg-[#2965f1] text-white", icon: React },
     EXPRESS: { name: "Express", class: "bg-[#000] text-white", icon: Express },
     MONGO: { name: "MongoDB", class: "bg-[#b2ffbd] text-black", icon: MongoDB },
-    ASTRO: { name: "Astro", class: "bg-black text-white", icon: AstroI }
-};
+    ASTRO: { name: "Astro", class: "bg-black text-white", icon: AstroI },
+    DOTNET: { name: "DOTNET", class: "bg-[#512BD4] text-white", icon: DOTNET },
+} as const;
+
+export type TagKey = keyof typeof TAGS;

@@ -1,2 +1,9 @@
 @import "tailwindcss";
 @plugin "daisyui";
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+    --color-primary: #1e9e9e;
+    --text-color-custom: #333333;
+    --font-familty-base: 'Inter', sans-serif;
+}

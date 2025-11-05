@@ -1,49 +1,106 @@
 ---
-const personalImageAlt = "Roberto Reyes";
+const personalImageAlt =
+    "https://res.cloudinary.com/dtahznjcx/image/upload/v1762340569/RB_qdeld1.png";
 ---
 
 <article
-    class="flex flex-col items-center justify-center gap-8 text-gray-700 dark:text-gray-300 md:flex-row"
+    class="flex flex-col items-center justify-center gap-8 text-base-content/90 dark:text-base-content md:flex-row"
+    id="aboutme-container"
 >
     <div
-        class="[&>p]:mb-4 [&>p>strong]:text-cyan-600 dark:[&>p>strong]:text-teal-400 [&>p>strong]:font-normal [&>p>strong]:font-mono text-pretty order-2 md:order-1"
+        id="aboutme-text"
+        class="[&>p]:mb-4 [&>p>strong]:text-primary [&>p>strong]:font-normal order-2 md:order-1"
     >
         <p>
-            Mi experiencia en el campo de la tecnología, he trabajado en
-            diversas áreas que van desde el soporte técnico hasta el desarrollo
-            Full-Stack y la gestión de infraestructuras en la nube. <strong
-                >Mi interes por la tecnología me mantiene en constante
-                actualización mediante certificaciones y nuevos aprendizajes que
-                van orientados al analisis, la seguridad y actualizacion de
-                lenguajes de programacion.
-            </strong>
+            Soy un desarrollador con <strong
+                >más de 8 años de experiencia</strong
+            > en el ecosistema tecnológico, transitando desde la ingeniería de sistemas
+            y soporte hasta la creación de soluciones
+            <strong>Full-Stack</strong> y la <strong
+                >gestión de infraestructuras Cloud</strong
+            >. Mi motor es la mejora continua: invierto constantemente en
+            certificaciones y nuevas tecnologías, con un foco principal en el <strong
+                >Análisis de Datos</strong
+            >, la <strong>Ciberseguridad</strong> y la <strong
+                >Modernización de lenguajes de programación</strong
+            >.
         </p>
+
         <p>
-            Actualmente, me desempeño como <strong
-                >Desarrollador Full-Stack, trabajando con tecnologías como .NET,
-                Node.js, React y Astro <em class="italic">
-                    y gestionando servicios de infraestructura Cloud como
-                </em> Azure y GCP.</strong
-            >Mi objetivo es avanzar en el campo de la ciberseguridad o DevOps,
-            contribuyendo al éxito de proyectos tecnológicos innovadores.
+            Actualmente, mi rol se centra en el <strong
+                >Desarrollo Full-Stack</strong
+            >, dominando plataformas como
+            <strong>.NET, Node.js, React y Astro.js</strong>. Paralelamente,
+            diseño y gestiono la infraestructura de despliegue en entornos Cloud
+            líderes, específicamente <strong>Azure, AWS y GCP</strong>. Mi
+            visión profesional apunta a la especialización en <strong
+                >DevOps o Ciberseguridad</strong
+            >, impulsando la eficiencia y la resiliencia en proyectos
+            innovadores.
         </p>
+
         <p>
-            Algunos de mis éxitos incluyen <strong
-                >Migracion de servicios de Red, seguridad y almacenamiento a
-                nivel nacional tanto local como a servicios Cloud, proyecto de
-                Red Wifi abierta a gran escala con Cisco y proyectos de
-                desarrollo orientado a la necesidades de los clientes.</strong
-            > Estos servicios fueron realizados con la documentacion y el uso de
-            estos servicios con exito.
+            Mis mayores logros incluyen la ejecución exitosa de proyectos de
+            alto impacto, como:
+            <strong
+                >1) La migración integral de servicios (Red, seguridad,
+                almacenamiento) a la Nube a nivel nacional. 2) El diseño e
+                implementación de una Red WiFi abierta de gran escala con
+                tecnología Cisco. 3) El desarrollo de soluciones personalizadas
+                que optimizaron directamente las operaciones de mis clientes.
+            </strong> Todos estos proyectos fueron entregados con documentación completa
+            y adoptados con éxito por los usuarios finales.
         </p>
     </div>
 
     <img
+        id="aboutme-image"
         width="200"
         height="200"
-        src="/Foto_P.webp"
+        src="https://res.cloudinary.com/dtahznjcx/image/upload/v1762340569/RB_qdeld1.png"
         alt={personalImageAlt}
-        class="order-1 object-cover w-64 h-full p-1 md:order-2 rotate-3 lg:p-2 lg:w-64 aspect-square rounded-2xl bg-black/20 dark:bg-yellow-500/5 ring-1 ring-black/70 dark:ring-white/20"
+        class="order-1 object-cover w-64 h-full p-1 md:order-2
+            /* Quitamos el rotate-3 y lo animamos con GSAP */
+            lg:p-2 lg:w-64 aspect-square rounded-2xl bg-base-300/50 dark:bg-primary/5 ring-1 ring-black/70 dark:ring-white/20
+            
+            /* Animación de Hover CSS: El toque sutil */
+            transition duration-300 ease-in-out hover:scale-[1.03] hover:shadow-2xl hover:shadow-primary/30"
         style="object-position: 50% 50%"
     />
 </article>
+
+<script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const text = document.getElementById("aboutme-text");
+    const image = document.getElementById("aboutme-image");
+    gsap.set(text, { autoAlpha: 0, x: -100 });
+    gsap.set(image, { autoAlpha: 0, x: 100, rotate: 0 });
+    gsap.to(text, {
+        autoAlpha: 1,
+        x: 0,
+        duration: 1.2,
+        ease: "power3.out",
+        scrollTrigger: {
+            trigger: "#aboutme-container",
+            start: "top 80%",
+            toggleActions: "play none none none",
+        },
+    });
+
+    gsap.to(image, {
+        autoAlpha: 1,
+        x: 0,
+        rotate: 3,
+        duration: 1.2,
+        ease: "power3.out",
+        scrollTrigger: {
+            trigger: "#aboutme-container",
+            start: "top 80%",
+            toggleActions: "play none none none",
+        },
+    });
+</script>

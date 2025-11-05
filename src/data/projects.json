@@ -1,11 +1,23 @@
 [
     {
+        "id": "Portal-Cursos",
+        "title": "Portal de Cursos - Applicacion Web",
+        "description": "Landing Page informativa sobre los servicios de una empresa de tecnología, realizada con Astro y Tailwind.",
+        "link": "https://portalcursos-demo.netlify.app/home",
+        "image": "https://res.cloudinary.com/dtahznjcx/image/upload/v1762333871/640shots_so_1_hhjqis.png",
+        "tags": [
+            "REACT",
+            "TAILWIND",
+            "DOTNET"
+        ]
+    },
+    {
         "id": "connective-it",
         "title": "Connective IT - Landing Page",
         "description": "Landing Page informativa sobre los servicios de una empresa de tecnología, realizada con Astro y Tailwind.",
         "link": "https://demo-connective.netlify.app/",
         "github": "https://github.com/rovert-rh/ConnecT",
-        "image": "/projects/portweb-08.webp",
+        "image": "https://res.cloudinary.com/dtahznjcx/image/upload/v1762335864/portweb-08_q1osuz.webp",
         "tags": [
             "ASTRO",
             "TAILWIND"
@@ -17,7 +29,7 @@
         "description": "Landing Page informativa sobre los servicios de una agencia creativa, realizada con Astro y Tailwind.",
         "link": "https://dvux.lat/",
         "github": "https://github.com/rovert-rh/dvux-v2.git",
-        "image": "/projects/portweb-04.webp",
+        "image": "https://res.cloudinary.com/dtahznjcx/image/upload/v1762335864/portweb-04_arxrin.webp",
         "tags": [
             "ASTRO",
             "TAILWIND"
@@ -25,11 +37,60 @@
     },
     {
         "id": "okei-amigo",
-        "title": "OKEI AMIGO",
-        "description": "Ecommerce de productos artesanales, implementando diseño personalizado en Shopify.",
+        "title": "OKEI AMIGO - Ecommerce",
+        "description": "Ecommerce de productos realizados artesanalmente, implementando un diseño con la marca, realizado con Shopify.",
         "link": "https://okeiamigo.com/",
-        "image": "/projects/portweb-07.webp",
+        "image": "https://res.cloudinary.com/dtahznjcx/image/upload/v1762335864/portweb-07_id67e9.webp",
         "tags": [
+            "SHOPIFY"
+        ]
+    },
+    {
+        "id": "simao",
+        "title": "SIMAO - Mantenimiento",
+        "description": "Landing Page informativa sobre la aplicación de SIMAO, desarrollada con HTML, CSS y JS.",
+        "link": "https://simao.app/",
+        "image": "https://res.cloudinary.com/dtahznjcx/image/upload/v1762335864/portweb-06_crqpir.webp",
+        "tags": [
+            "HTML",
+            "CSS",
+            "JAVASCRIPT"
+        ]
+    },
+    {
+        "id": "ezencial",
+        "title": "Ezencial - Terapias Holísticas",
+        "description": "Landing Page informativa sobre los servicios de terapias holísticas, con más información de sus servicios a ofrecer, realizada en HTML, CSS y JS.",
+        "link": "https://www.ezencial.com.ec/",
+        "image": "https://res.cloudinary.com/dtahznjcx/image/upload/v1762335863/portweb-01_yioifm.webp",
+        "tags": [
+            "HTML",
+            "CSS",
+            "JAVASCRIPT"
+        ]
+    },
+    {
+        "id": "boster-st",
+        "title": "Boster ST - Plataforma de Streamers",
+        "description": "Aplicación Web sobre una plataforma de emparejamiento de streamers, realizada con Node.js, MongoDB y React.",
+        "link": "https://bosterst.netlify.app",
+        "image": "https://res.cloudinary.com/dtahznjcx/image/upload/v1762335863/portweb-02_picbpf.webp",
+        "tags": [
+            "REACT",
+            "EXPRESS",
+            "MONGO"
+        ]
+    },
+    {
+        "id": "gold-jeans",
+        "title": "Gold Jeans - Página Web y Ecommerce",
+        "description": "Página Web, donde se muestra la información de la empresa que vende pantalones e igual realicé el ecommerce en shopify.",
+        "link": "https://goldjeansmx.netlify.app/",
+        "image": "https://res.cloudinary.com/dtahznjcx/image/upload/v1762335864/portweb-05_tmqchm.webp",
+        "tags": [
+            "HTML",
+            "CSS",
+            "JAVASCRIPT",
             "SHOPIFY"
         ]
     }

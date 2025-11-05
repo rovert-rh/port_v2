@@ -1,0 +1,26 @@
+[
+    {
+        "date": "Agosto 2023 - Octubre 2025",
+        "title": "Desarrollador Full Stack",
+        "company": "Connective It",
+        "description": "Desarrollo de API REST con .NET, creación de interfaces responsivas con React y Angular, despliegue de servicios en Azure, y aplicación de prácticas de Clean Code en entornos ágiles."
+    },
+    {
+        "date": "Abril 2022 - Agosto 2023",
+        "title": "Desarrollador - Analista de Datos",
+        "company": "Autónomo",
+        "description": "Diseño y mantenimiento de Ecommerce y Landing Pages mediante herramientas personalizadas y No Code. Análisis de datos para mejorar estrategias comerciales, incrementar tráfico y optimizar conversiones."
+    },
+    {
+        "date": "Mayo 2021 - Junio 2022",
+        "title": "Integrador de Infraestructura",
+        "company": "Visión y Estrategia de Negocios",
+        "description": "Modernización de infraestructura tecnológica nacional, migración a la nube y gestión de contratos con proveedores. Mejoras en implementación que redujeron tiempos y fallos operativos."
+    },
+    {
+        "date": "Julio 2015 - Octubre 2019",
+        "title": "Analista de Sistemas",
+        "company": "Six Flags México",
+        "description": "Gestión de redes, implementación de proyectos de seguridad y soporte técnico para operaciones críticas. Contribuciones clave a la optimización de procesos internos y reducción de tiempos de inactividad."
+    }
+]

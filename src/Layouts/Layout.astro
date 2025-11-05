@@ -2,6 +2,7 @@
 import { ViewTransitions } from "astro:transitions";
 import Header from "../Components/Global/Heather.astro";
 import "../styles/global.css";
+import Footer from "../Components/Global/Footer.astro";
 
 interface Props {
     title: string;
@@ -15,19 +16,38 @@ const { title, description } = Astro.props;
 <html lang="es" data-theme="light">
     <head>
         <meta charset="utf-8" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" type="image/svg+xml" href="/RB.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="generator" content={Astro.generator} />
         <meta name="description" content={description} />
         <title>{title}</title>
-
         <ViewTransitions />
     </head>
-    <body class="bg-base-200 text-base-content min-h-screen">
-        <Header />
 
-        <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-12">
+    <body
+        class="relative bg-base-200 text-base-content min-h-100dvh transition-colors duration-500 overflow-x-hidden"
+    >
+        <Header />
+        <div
+            class="fixed inset-0 z-[-2] opacity-0 transition-opacity duration-700 dark:opacity-100
+      bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"
+        >
+        </div>
+        <div
+            class="fixed inset-0 z-[-1] opacity-100 transition-opacity duration-700 dark:opacity-0
+      bg-white bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)]
+      bg-size:6rem_4rem"
+        >
+            <div
+                class="absolute inset-0 bg-[radial-gradient(circle_500px_at_50%_200px,#C9EBFF,transparent)]"
+            >
+            </div>
+        </div>
+        <main
+            class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-12 z-10"
+        >
             <slot />
         </main>
+        <Footer />
     </body>
 </html>

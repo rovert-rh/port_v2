@@ -2,27 +2,18 @@
 import ThemeToggle from "./ThemeToggle.astro";
 
 const navItems = [
-    {
-        title: "Experiencia",
-        label: "experiencia",
-        url: "/#experiencia",
-    },
-    {
-        title: "Proyectos",
-        label: "proyectos",
-        url: "/#proyectos",
-    },
-    {
-        title: "Sobre mí",
-        label: "sobre-mi",
-        url: "/#sobre-mi",
-    },
+    { title: "Experiencia", label: "experiencia", url: "/#experiencia" },
+    { title: "Proyectos", label: "proyectos", url: "/#proyectos" },
+    { title: "Contacto", label: "contacto", url: "/#contacto" },
 ];
 ---
 
-<header class="fixed top-0 z-50 w-full mt-2">
+<header
+    class="fixed top-0 z-50 w-full transition-transform duration-300"
+    id="main-header"
+>
     <nav
-        class="navbar mx-auto w-fit rounded-full shadow-xl transition-all duration-300 backdrop-blur-sm bg-base-100/70"
+        class="navbar mx-auto w-fit rounded-full shadow-xl backdrop-blur-md bg-base-100/80 transition-all duration-300"
         id="main-navbar"
     >
         <ul
@@ -33,11 +24,15 @@ const navItems = [
                 navItems.map((link) => (
                     <li>
                         <a
-                            class="relative block px-3 py-2 transition-colors hover:text-primary active:text-primary"
+                            class="relative block px-3 py-2 transition-colors duration-300 hover:text-primary group/link"
                             aria-label={link.label}
                             href={link.url}
                         >
                             {link.title}
+                            <span
+                                data-active-mark={link.label}
+                                class="absolute bottom-0 left-0 h-0.5 w-full bg-primary origin-left scale-x-0 transition-transform duration-300 ease-out"
+                            />
                         </a>
                     </li>
                 ))
@@ -50,44 +45,123 @@ const navItems = [
     </nav>
 </header>
 
-<script>
+<script type="module">
+    import { gsap } from "gsap";
+    // ScrollTrigger no es necesario aquí; lo dejo importado solo si lo usas en otros sitios
+    // import { ScrollTrigger } from "gsap/ScrollTrigger";
+    // gsap.registerPlugin(ScrollTrigger);
+
     document.addEventListener("astro:load", () => {
+        const mainHeader = document.getElementById("main-header");
+        if (!mainHeader) return;
+
+        // Añadimos estilos iniciales por seguridad
+        mainHeader.style.willChange = "transform, opacity";
+        mainHeader.style.transition = "transform 0.3s ease, opacity 0.3s ease";
+
+        let headerHeight = () => mainHeader.offsetHeight + 10;
+
+        // Estado de scroll
+        let lastScrollY = window.scrollY || 0;
+        let lastDirection = 0; // 1 down, -1 up
+        let ticking = false;
+
+        const MIN_DELTA = 5; // umbral para evitar parpadeos en micro-scrolls
+
+        const hideHeader = () => {
+            gsap.to(mainHeader, {
+                y: -headerHeight(),
+                autoAlpha: 0,
+                duration: 0.28,
+                ease: "power2.out",
+            });
+        };
+
+        const showHeader = () => {
+            gsap.to(mainHeader, {
+                y: 0,
+                autoAlpha: 1,
+                duration: 0.28,
+                ease: "power2.out",
+            });
+        };
+
+        const onScrollRaf = (currentY) => {
+            const delta = currentY - lastScrollY;
+            if (Math.abs(delta) < MIN_DELTA) {
+                // movimiento muy pequeño -> ignorar
+                ticking = false;
+                return;
+            }
+
+            const direction = delta > 0 ? 1 : -1;
+
+            // Si va hacia abajo y ya está oculto, no volver a animar
+            if (direction === 1 && currentY > 80) {
+                if (lastDirection !== 1) hideHeader();
+            } else if (direction === -1) {
+                if (lastDirection !== -1) showHeader();
+            }
+
+            lastDirection = direction;
+            lastScrollY = currentY;
+            ticking = false;
+        };
+
+        window.addEventListener(
+            "scroll",
+            () => {
+                const currentY = window.scrollY || 0;
+                if (!ticking) {
+                    requestAnimationFrame(() => onScrollRaf(currentY));
+                    ticking = true;
+                }
+            },
+            { passive: true },
+        );
+
+        // Recalcular altura al cambiar tamaño / al cargar fuentes
+        window.addEventListener("resize", () => {
+            // fuerza recalculo; también puedes readaptar si quieres
+            // no hace falta asignar a una variable porque headerHeight() lee offsetHeight
+        });
+
+        // Forzamos un cálculo inicial después de carga completa
+        window.addEventListener("load", () => {
+            // mover header a 0 para asegurar estado inicial
+            gsap.set(mainHeader, { y: 0, autoAlpha: 1 });
+        });
+
+        // --- IntersectionObserver (mantengo tu lógica)
         const sections = document.querySelectorAll("section");
         const navLinks = document.querySelectorAll("#nav-menu-links a");
 
-        const setActiveLink = (targetId: any) => {
+        const setActiveLink = (targetId) => {
             navLinks.forEach((link) => {
-                const linkLabel = link.getAttribute("aria-label");
-                if (linkLabel === targetId) {
-                    // DaisyUI usa 'active' para el enlace seleccionado, 'primary' para el color
-                    link.classList.add("active");
-                    link.classList.add("text-primary"); // Añadimos color primario de DaisyUI
-                } else {
-                    link.classList.remove("active");
-                    link.classList.remove("text-primary");
-                }
+                const label = link.getAttribute("aria-label");
+                const mark = link.querySelector(
+                    `[data-active-mark="${label}"]`,
+                );
+                const isActive = label === targetId;
+                link.classList.toggle("text-primary", isActive);
+                mark?.classList.toggle("scale-x-100", isActive);
+                mark?.classList.toggle("scale-x-0", !isActive);
             });
         };
 
-        const callback = (entries: any) => {
-            entries.forEach((entry: any) => {
-                if (entry.isIntersecting) {
-                    setActiveLink(entry.target.id);
-                }
-            });
-        };
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting)
+                        setTimeout(() => setActiveLink(entry.target.id), 100);
+                });
+            },
+            { threshold: 0.3 },
+        );
 
-        const observer = new IntersectionObserver(callback, {
-            root: null,
-            rootMargin: "0px",
-            threshold: 0.3,
-        });
-
-        sections.forEach((section) => {
-            observer.observe(section);
-        });
-        document.addEventListener("astro:before-swap", () => {
-            observer.disconnect();
-        });
+        sections.forEach((section) => observer.observe(section));
+        document.addEventListener("astro:before-swap", () =>
+            observer.disconnect(),
+        );
     });
 </script>

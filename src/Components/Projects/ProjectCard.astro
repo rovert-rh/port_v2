@@ -1,32 +1,52 @@
 ---
 import GitHub from "../../SVG/Icons/GitHub.astro";
 import Link from "../../SVG/Icons/Link.astro";
-import { TAGS } from "../../data/tags";
+import { TAGS, type TagKey } from "../../data/tags";
 const { project } = Astro.props;
+
+interface Project {
+    id: string;
+    title: string;
+    description: string;
+    image: string;
+    link?: string;
+    github?: string;
+    tags: TagKey[];
+}
+
+interface Props {
+    project: Project;
+}
 ---
 
 <article
-    class="group relative flex flex-col overflow-hidden rounded-2xl shadow-lg border border-gray-800 hover:shadow-2xl transition-all duration-300 bg-gray-900/30"
+    data-gsap-project
+    class="group relative flex flex-col overflow-hidden rounded-2xl
+        shadow-xl transition-all duration-300 bg-base-300/50
+        border border-base-content/20
+        
+        /* Hover refinado */
+        hover:shadow-primary/30 hover:shadow-2xl hover:scale-[1.01]"
 >
-    <a href={`/projects/${project.id}`} class="block">
-        <img
-            src={project.image}
-            alt={project.title}
-            class="object-cover w-full h-48 md:h-56 lg:h-64 group-hover:scale-105 transition-transform duration-300"
-            loading="lazy"
-        />
-    </a>
-    <div class="flex flex-col flex-grow p-4">
+    <img
+        src={project.image}
+        alt={project.title}
+        class="object-cover w-full h-48 md:h-56 lg:h-64
+               group-hover:scale-[1.03] transition-transform duration-500 ease-out"
+        loading="lazy"
+    />
+
+    <div class="flex flex-col p-4">
         <h3
-            class="text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition"
+            class="text-xl font-bold text-base-content mb-2
+                   group-hover:text-primary transition duration-300"
         >
             {project.title}
         </h3>
-        <p class="text-gray-400 text-sm flex-grow">{project.description}</p>
 
         <ul class="flex flex-wrap mt-3 gap-2">
             {
-                project.tags.map((tagKey) => {
+                project.tags.map((tagKey: TagKey) => {
                     const tag = TAGS[tagKey];
                     return (
                         <li>
@@ -48,7 +68,7 @@ const { project } = Astro.props;
                     <a
                         href={project.github}
                         target="_blank"
-                        class="text-gray-400 hover:text-white flex items-center gap-2"
+                        class="text-base-content/70 hover:text-primary flex items-center gap-2 transition"
                     >
                         <GitHub class="size-5" /> Code
                     </a>
@@ -59,7 +79,7 @@ const { project } = Astro.props;
                     <a
                         href={project.link}
                         target="_blank"
-                        class="text-gray-400 hover:text-white flex items-center gap-2"
+                        class="text-base-content/70 hover:text-primary flex items-center gap-2 transition"
                     >
                         <Link class="size-4" /> Preview
                     </a>
